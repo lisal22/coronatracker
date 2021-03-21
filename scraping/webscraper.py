@@ -49,7 +49,6 @@ def get_content(url):
         # content = BeautifulSoup(response.content, "html.parser")
     except Exception:
         return None
-
     return content
 
 
@@ -64,7 +63,6 @@ def extract_article(link):
     except Exception as e:
         logging.error("Fail to extract Article. Error: {}".format(e))
         return None, False
-
     return article, True
 
 
@@ -73,7 +71,6 @@ def localtime_to_ust(datetime):
     date_time_naive = parse(datetime)
     timezone = pytz.timezone(schema['timezone'])
     local_dt = timezone.localize(date_time_naive, is_dst=None)
-
     return local_dt
 
 
