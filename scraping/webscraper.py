@@ -35,9 +35,14 @@ import logging
 mydb = None
 TABLE_NAME = "newsapi_n"
 
+class WebScraper:
+#Aggregate Root
+    def __init__(self, url, link, datetime):
+        self.url = url
+        self.link = link
+        self.datetime = datetime
 
 def get_content(url):
-    url = url
     try:
         response = requests.get(url, timeout=5)
         content = BeautifulSoup(response.content, "xml")
