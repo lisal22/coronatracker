@@ -66,13 +66,85 @@ http://www.dailytelegraph.com.au/news/national/rss
 http://www.dailytelegraph.com.au/news/world/rss
 
 """
-
 from ScrapeRss.globals import (
     ISO_8601_DATE_FORMAT,
     ISO_8601_DATE_WITHOUT_SEC_FORMAT,
     YEAR_MONTH_DAY_FORMAT,
 )
 
+from abc import ABCMeta, abstractmethod
+
+class INewsSourceBuilder(metaclass = ABCMeta):
+    "The Builder Interface"
+
+@staticmethod
+@abstractmethod
+def build_url():
+    pass
+
+@staticmethod
+@abstractmethod
+def build_title():
+    pass
+
+@staticmethod
+@abstractmethod
+def build_description():
+    pass
+
+@staticmethod
+@abstractmethod
+def build_data_xml():
+    pass
+
+@staticmethod
+@abstractmethod
+def get_news():
+    pass
+    
+class NewsSource(INewsSourceBuilder):
+    "concrete builder"
+
+    def __init__(self): 
+        self.Product = Product()
+    
+    def build_url(self, url):
+        self.url = url
+        return self
+    
+    def build_title(self, title):
+        self.title = title
+        return self
+    
+    def build_description(self, description):
+        self.description = description
+        return self
+    
+    def build_data_xml(self, data_xml):
+        self.data_xml = data_xml
+        return self
+
+    def get_News(self):
+        return self.product
+
+class Product():
+    "the products"
+
+    def __init__(self):
+        self.news = []
+
+class Director:
+    "the director, building a complex representation"
+
+    @staticmethod
+    def construct():
+        "constructs and return final products"
+        return Builder()\
+            .build_url()\
+            .build_title()\
+            .build_description()\
+            .build_data_xml()\
+            .get_news()
 
 NEWS_SOURCES = {
     "de_DE": [
@@ -566,3 +638,5 @@ NEWS_SOURCES = {
         ),
     ],
 }
+
+info = rss_sites_info.Director.construct()
